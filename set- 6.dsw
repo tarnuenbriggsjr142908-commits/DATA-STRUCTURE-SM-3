@@ -1,0 +1,124 @@
+ERRO NO: 92500588041
+//1] Write a program which performs following operations using simple queue.  insert() -> delete() -> display()*/
+
+#include <iostream>
+using namespace std;
+
+#define MAX 100
+
+class Queue
+{
+    int arr[MAX];
+    int front;
+    int rear;
+
+public:
+    Queue()
+    {
+        front = -1;
+        rear = -1;
+    }
+
+    void insert()
+    {
+        int value;
+
+        if (rear == MAX - 1)
+        {
+            cout << "Queue Overflow!" << endl;
+            return;
+        }
+
+        cout << "Enter value: ";
+        cin >> value;
+
+        if (front == -1)
+            front = 0;
+
+        rear++;
+
+        arr[rear] = value;
+
+        cout << "Element inserted." << endl;
+    }
+
+    void deleteElement()
+    {
+        if (front == -1 || front > rear)
+        {
+            cout << "Queue Underflow!" << endl;
+            return;
+        }
+
+        cout << "Deleted element: "
+             << arr[front] << endl;
+
+        front++;
+
+        if (front > rear)
+        {
+            front = -1;
+            rear = -1;
+        }
+    }
+
+    void display()
+    {
+        if (front == -1)
+        {
+            cout << "Queue is empty." << endl;
+            return;
+        }
+
+        cout << "Queue: ";
+
+        for (int i = front; i <= rear; i++)
+        {
+            cout << arr[i] << " ";
+        }
+
+        cout << endl;
+    }
+};
+
+int main()
+{
+    Queue q;
+    int choice;
+
+    do
+    {
+        cout << "\n===== SIMPLE QUEUE =====" << endl;
+        cout << "1. Insert" << endl;
+        cout << "2. Delete" << endl;
+        cout << "3. Display" << endl;
+        cout << "4. Exit" << endl;
+
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            q.insert();
+            break;
+
+        case 2:
+            q.deleteElement();
+            break;
+
+        case 3:
+            q.display();
+            break;
+
+        case 4:
+            break;
+
+        default:
+            cout << "Invalid choice!" << endl;
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}

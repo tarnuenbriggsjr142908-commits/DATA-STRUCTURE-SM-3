@@ -1,0 +1,139 @@
+//ERRO NO: 92500588041*/
+//7] Write a program which performs following operations using circular queue.  Insert() -> delete() -> display()*/
+
+#include <iostream>
+using namespace std;
+
+#define MAX 5
+
+class CircularQueue
+{
+    int arr[MAX];
+    int front;
+    int rear;
+
+public:
+    CircularQueue()
+    {
+        front = -1;
+        rear = -1;
+    }
+
+    void insert()
+    {
+        int value;
+
+        if ((rear + 1) % MAX == front)
+        {
+            cout << "Circular Queue Overflow!" << endl;
+            return;
+        }
+
+        cout << "Enter value: ";
+        cin >> value;
+
+        if (front == -1)
+        {
+            front = 0;
+            rear = 0;
+        }
+        else
+        {
+            rear = (rear + 1) % MAX;
+        }
+
+        arr[rear] = value;
+
+        cout << "Element inserted." << endl;
+    }
+
+    void deleteElement()
+    {
+        if (front == -1)
+        {
+            cout << "Circular Queue Underflow!" << endl;
+            return;
+        }
+
+        cout << "Deleted element: "
+             << arr[front] << endl;
+
+        if (front == rear)
+        {
+            front = -1;
+            rear = -1;
+        }
+        else
+        {
+            front = (front + 1) % MAX;
+        }
+    }
+
+    void display()
+    {
+        if (front == -1)
+        {
+            cout << "Queue is empty." << endl;
+            return;
+        }
+
+        cout << "Circular Queue: ";
+
+        int i = front;
+
+        while (true)
+        {
+            cout << arr[i] << " ";
+
+            if (i == rear)
+                break;
+
+            i = (i + 1) % MAX;
+        }
+
+        cout << endl;
+    }
+};
+
+int main()
+{
+    CircularQueue q;
+
+    int choice;
+
+    do
+    {
+        cout << "\n===== CIRCULAR QUEUE =====" << endl;
+        cout << "1. Insert" << endl;
+        cout << "2. Delete" << endl;
+        cout << "3. Display" << endl;
+        cout << "4. Exit" << endl;
+
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            q.insert();
+            break;
+
+        case 2:
+            q.deleteElement();
+            break;
+
+        case 3:
+            q.display();
+            break;
+
+        case 4:
+            break;
+
+        default:
+            cout << "Invalid choice!" << endl;
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}

@@ -1,0 +1,41 @@
+//ERRO NO: 92500588041*/
+//13] Enter N elements and perform search operations using :   Linear search   Binary search (with recursion, without recursion)*/
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n;
+    int a[100];
+    int key;
+    bool found = false;
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    cout << "Enter elements:\n";
+
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
+
+    cout << "Enter element to search: ";
+    cin >> key;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i] == key)
+        {
+            cout << "Element found at position "
+                 << i + 1 << endl;
+
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+        cout << "Element not found." << endl;
+
+    return 0;
+}

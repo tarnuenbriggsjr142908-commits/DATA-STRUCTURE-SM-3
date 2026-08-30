@@ -1,0 +1,157 @@
+//ERRO ON : 29500588041*/
+//1] Write a program which performs following stack operations. ->push() -> pop() -> peep() -> update()*/
+
+#include <iostream>
+using namespace std;
+
+#define MAX 100
+
+class Stack
+{
+    int arr[MAX];
+    int top;
+
+public:
+    Stack()
+    {
+        top = -1;
+    }
+
+    void push()
+    {
+        int value;
+
+        if (top == MAX - 1)
+        {
+            cout << "Stack Overflow!" << endl;
+            return;
+        }
+
+        cout << "Enter value: ";
+        cin >> value;
+
+        top++;
+        arr[top] = value;
+
+        cout << "Value pushed successfully." << endl;
+    }
+
+    void pop()
+    {
+        if (top == -1)
+        {
+            cout << "Stack Underflow!" << endl;
+            return;
+        }
+
+        cout << "Deleted element: " << arr[top] << endl;
+        top--;
+    }
+
+    void peep()
+    {
+        if (top == -1)
+        {
+            cout << "Stack is empty." << endl;
+            return;
+        }
+
+        cout << "Top element: " << arr[top] << endl;
+    }
+
+    void update()
+    {
+        int position, value;
+
+        if (top == -1)
+        {
+            cout << "Stack is empty." << endl;
+            return;
+        }
+
+        cout << "Enter position (1 to " << top + 1 << "): ";
+        cin >> position;
+
+        if (position < 1 || position > top + 1)
+        {
+            cout << "Invalid position." << endl;
+            return;
+        }
+
+        cout << "Enter new value: ";
+        cin >> value;
+
+        arr[position - 1] = value;
+
+        cout << "Value updated successfully." << endl;
+    }
+
+    void display()
+    {
+        if (top == -1)
+        {
+            cout << "Stack is empty." << endl;
+            return;
+        }
+
+        cout << "Stack elements:" << endl;
+
+        for (int i = top; i >= 0; i--)
+        {
+            cout << arr[i] << endl;
+        }
+    }
+};
+
+int main()
+{
+    Stack s;
+    int choice;
+
+    do
+    {
+        cout << "\n===== STACK MENU =====" << endl;
+        cout << "1. Push" << endl;
+        cout << "2. Pop" << endl;
+        cout << "3. Peep" << endl;
+        cout << "4. Update" << endl;
+        cout << "5. Display" << endl;
+        cout << "6. Exit" << endl;
+
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            s.push();
+            break;
+
+        case 2:
+            s.pop();
+            break;
+
+        case 3:
+            s.peep();
+            break;
+
+        case 4:
+            s.update();
+            break;
+
+        case 5:
+            s.display();
+            break;
+
+        case 6:
+            cout << "Program ended." << endl;
+            break;
+
+        default:
+            cout << "Invalid choice!" << endl;
+        }
+
+    } while (choice != 6);
+
+    return 0;
+}

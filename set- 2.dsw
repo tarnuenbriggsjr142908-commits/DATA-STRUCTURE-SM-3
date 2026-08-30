@@ -1,0 +1,77 @@
+//ERRO NO: 92500588041*/
+2] Write a program to find out factorial of number using stack.
+
+#include <iostream>
+using namespace std;
+
+#define MAX 100
+
+class Stack
+{
+    int arr[MAX];
+    int top;
+
+public:
+    Stack()
+    {
+        top = -1;
+    }
+
+    void push(int value)
+    {
+        if (top == MAX - 1)
+        {
+            cout << "Stack Overflow!" << endl;
+            return;
+        }
+
+        arr[++top] = value;
+    }
+
+    int pop()
+    {
+        if (top == -1)
+        {
+            return -1;
+        }
+
+        return arr[top--];
+    }
+
+    bool empty()
+    {
+        return top == -1;
+    }
+};
+
+int main()
+{
+    int n;
+    unsigned long long factorial = 1;
+
+    cout << "Enter number: ";
+    cin >> n;
+
+    if (n < 0)
+    {
+        cout << "Factorial is not defined for negative numbers." << endl;
+        return 0;
+    }
+
+    Stack s;
+
+    for (int i = 1; i <= n; i++)
+    {
+        s.push(i);
+    }
+
+    while (!s.empty())
+    {
+        factorial = factorial * s.pop();
+    }
+
+    cout << "Factorial of " << n << " = "
+         << factorial << endl;
+
+    return 0;
+}

@@ -1,0 +1,144 @@
+//ERRO NO: 90500588041*/
+//8] Write a program of dynamic queue.*/
+
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node *next;
+};
+
+class DynamicQueue
+{
+    Node *front;
+    Node *rear;
+
+public:
+    DynamicQueue()
+    {
+        front = NULL;
+        rear = NULL;
+    }
+
+    void insert()
+    {
+        int value;
+
+        cout << "Enter value: ";
+        cin >> value;
+
+        Node *newNode = new Node;
+
+        newNode->data = value;
+        newNode->next = NULL;
+
+        if (rear == NULL)
+        {
+            front = rear = newNode;
+        }
+        else
+        {
+            rear->next = newNode;
+            rear = newNode;
+        }
+
+        cout << "Element inserted." << endl;
+    }
+
+    void deleteElement()
+    {
+        if (front == NULL)
+        {
+            cout << "Queue Underflow!" << endl;
+            return;
+        }
+
+        Node *temp = front;
+
+        cout << "Deleted element: "
+             << temp->data << endl;
+
+        front = front->next;
+
+        if (front == NULL)
+            rear = NULL;
+
+        delete temp;
+    }
+
+    void display()
+    {
+        if (front == NULL)
+        {
+            cout << "Queue is empty." << endl;
+            return;
+        }
+
+        Node *temp = front;
+
+        cout << "Queue: ";
+
+        while (temp != NULL)
+        {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+
+        cout << endl;
+    }
+
+    ~DynamicQueue()
+    {
+        while (front != NULL)
+        {
+            Node *temp = front;
+            front = front->next;
+            delete temp;
+        }
+    }
+};
+
+int main()
+{
+    DynamicQueue q;
+
+    int choice;
+
+    do
+    {
+        cout << "\n===== DYNAMIC QUEUE =====" << endl;
+        cout << "1. Insert" << endl;
+        cout << "2. Delete" << endl;
+        cout << "3. Display" << endl;
+        cout << "4. Exit" << endl;
+
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            q.insert();
+            break;
+
+        case 2:
+            q.deleteElement();
+            break;
+
+        case 3:
+            q.display();
+            break;
+
+        case 4:
+            break;
+
+        default:
+            cout << "Invalid choice!" << endl;
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}

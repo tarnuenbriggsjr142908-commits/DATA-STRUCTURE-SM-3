@@ -1,0 +1,577 @@
+//ERRO NO: 92500588041*/
+//Perform following operations :  1] Create  2] Display  3] Insert  o insert first  o insert last  o insert desired  o insert before desired  o insert after desired*/
+
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node *next;
+};
+
+class SinglyLinkedList
+{
+    Node *head;
+
+public:
+    SinglyLinkedList()
+    {
+        head = NULL;
+    }
+
+    void create()
+    {
+        int n, value;
+
+        cout << "Enter number of nodes: ";
+        cin >> n;
+
+        for (int i = 0; i < n; i++)
+        {
+            cout << "Enter value: ";
+            cin >> value;
+
+            insertLast(value);
+        }
+    }
+
+    void display()
+    {
+        if (head == NULL)
+        {
+            cout << "List is empty." << endl;
+            return;
+        }
+
+        Node *temp = head;
+
+        cout << "List: ";
+
+        while (temp != NULL)
+        {
+            cout << temp->data << " -> ";
+            temp = temp->next;
+        }
+
+        cout << "NULL" << endl;
+    }
+
+    void insertFirst()
+    {
+        int value;
+
+        cout << "Enter value: ";
+        cin >> value;
+
+        Node *newNode = new Node;
+
+        newNode->data = value;
+        newNode->next = head;
+
+        head = newNode;
+    }
+
+    void insertLast(int value)
+    {
+        Node *newNode = new Node;
+
+        newNode->data = value;
+        newNode->next = NULL;
+
+        if (head == NULL)
+        {
+            head = newNode;
+            return;
+        }
+
+        Node *temp = head;
+
+        while (temp->next != NULL)
+            temp = temp->next;
+
+        temp->next = newNode;
+    }
+
+    void insertLast()
+    {
+        int value;
+
+        cout << "Enter value: ";
+        cin >> value;
+
+        insertLast(value);
+    }
+
+    void insertPosition()
+    {
+        int position, value;
+
+        cout << "Enter position: ";
+        cin >> position;
+
+        cout << "Enter value: ";
+        cin >> value;
+
+        if (position <= 0)
+        {
+            cout << "Invalid position." << endl;
+            return;
+        }
+
+        if (position == 1)
+        {
+            Node *newNode = new Node;
+            newNode->data = value;
+            newNode->next = head;
+            head = newNode;
+            return;
+        }
+
+        Node *temp = head;
+
+        for (int i = 1; i < position - 1 && temp != NULL; i++)
+            temp = temp->next;
+
+        if (temp == NULL)
+        {
+            cout << "Invalid position." << endl;
+            return;
+        }
+
+        Node *newNode = new Node;
+
+        newNode->data = value;
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
+
+    void insertBefore()
+    {
+        int key, value;
+
+        cout << "Enter desired element: ";
+        cin >> key;
+
+        cout << "Enter new value: ";
+        cin >> value;
+
+        if (head == NULL)
+        {
+            cout << "List is empty." << endl;
+            return;
+        }
+
+        if (head->data == key)
+        {
+            Node *newNode = new Node;
+
+            newNode->data = value;
+            newNode->next = head;
+            head = newNode;
+
+            return;
+        }
+
+        Node *temp = head;
+
+        while (temp->next != NULL &&
+               temp->next->data != key)
+        {
+            temp = temp->next;
+        }
+
+        if (temp->next == NULL)
+        {
+            cout << "Element not found." << endl;
+            return;
+        }
+
+        Node *newNode = new Node;
+
+        newNode->data = value;
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
+
+    void insertAfter()
+    {
+        int key, value;
+
+        cout << "Enter desired element: ";
+        cin >> key;
+
+        cout << "Enter new value: ";
+        cin >> value;
+
+        Node *temp = head;
+
+        while (temp != NULL && temp->data != key)
+            temp = temp->next;
+
+        if (temp == NULL)
+        {
+            cout << "Element not found." << endl;
+            return;
+        }
+
+        Node *newNode = new Node;
+
+        newNode->data = value;
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
+
+    void deleteFirst()
+    {
+        if (head == NULL)
+        {
+            cout << "List is empty." << endl;
+            return;
+        }
+
+        Node *temp = head;
+
+        head = head->next;
+
+        delete temp;
+    }
+
+    void deleteLast()
+    {
+        if (head == NULL)
+        {
+            cout << "List is empty." << endl;
+            return;
+        }
+
+        if (head->next == NULL)
+        {
+            delete head;
+            head = NULL;
+            return;
+        }
+
+        Node *temp = head;
+
+        while (temp->next->next != NULL)
+            temp = temp->next;
+
+        delete temp->next;
+
+        temp->next = NULL;
+    }
+
+    void deleteDesired()
+    {
+        int key;
+
+        cout << "Enter element to delete: ";
+        cin >> key;
+
+        if (head == NULL)
+            return;
+
+        if (head->data == key)
+        {
+            deleteFirst();
+            return;
+        }
+
+        Node *temp = head;
+
+        while (temp->next != NULL &&
+               temp->next->data != key)
+        {
+            temp = temp->next;
+        }
+
+        if (temp->next == NULL)
+        {
+            cout << "Element not found." << endl;
+            return;
+        }
+
+        Node *del = temp->next;
+
+        temp->next = del->next;
+
+        delete del;
+    }
+
+    void deleteBefore()
+    {
+        int key;
+
+        cout << "Delete node before: ";
+        cin >> key;
+
+        if (head == NULL || head->next == NULL)
+        {
+            cout << "Operation not possible." << endl;
+            return;
+        }
+
+        if (head->next->data == key)
+        {
+            deleteFirst();
+            return;
+        }
+
+        Node *temp = head;
+
+        while (temp->next->next != NULL &&
+               temp->next->next->data != key)
+        {
+            temp = temp->next;
+        }
+
+        if (temp->next->next == NULL)
+        {
+            cout << "Element not found." << endl;
+            return;
+        }
+
+        Node *del = temp->next;
+
+        temp->next = del->next;
+
+        delete del;
+    }
+
+    void deleteAfter()
+    {
+        int key;
+
+        cout << "Delete node after: ";
+        cin >> key;
+
+        Node *temp = head;
+
+        while (temp != NULL && temp->data != key)
+            temp = temp->next;
+
+        if (temp == NULL || temp->next == NULL)
+        {
+            cout << "Operation not possible." << endl;
+            return;
+        }
+
+        Node *del = temp->next;
+
+        temp->next = del->next;
+
+        delete del;
+    }
+
+    void search()
+    {
+        int key;
+        int position = 1;
+
+        cout << "Enter element to search: ";
+        cin >> key;
+
+        Node *temp = head;
+
+        while (temp != NULL)
+        {
+            if (temp->data == key)
+            {
+                cout << "Element found at position "
+                     << position << endl;
+                return;
+            }
+
+            temp = temp->next;
+            position++;
+        }
+
+        cout << "Element not found." << endl;
+    }
+
+    void sortList()
+    {
+        if (head == NULL)
+            return;
+
+        Node *i;
+        Node *j;
+
+        for (i = head; i != NULL; i = i->next)
+        {
+            for (j = i->next; j != NULL; j = j->next)
+            {
+                if (i->data > j->data)
+                {
+                    int temp = i->data;
+                    i->data = j->data;
+                    j->data = temp;
+                }
+            }
+        }
+
+        cout << "List sorted." << endl;
+    }
+
+    void update()
+    {
+        int position, value;
+
+        cout << "Enter position: ";
+        cin >> position;
+
+        cout << "Enter new value: ";
+        cin >> value;
+
+        Node *temp = head;
+
+        for (int i = 1; i < position && temp != NULL; i++)
+            temp = temp->next;
+
+        if (temp == NULL)
+        {
+            cout << "Invalid position." << endl;
+            return;
+        }
+
+        temp->data = value;
+
+        cout << "Element updated." << endl;
+    }
+
+    void countNodes()
+    {
+        int count = 0;
+
+        Node *temp = head;
+
+        while (temp != NULL)
+        {
+            count++;
+            temp = temp->next;
+        }
+
+        cout << "Number of nodes = "
+             << count << endl;
+    }
+
+    ~SinglyLinkedList()
+    {
+        while (head != NULL)
+        {
+            Node *temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+};
+
+int main()
+{
+    SinglyLinkedList list;
+
+    int choice;
+
+    do
+    {
+        cout << "\n===== SINGLY LINKED LIST =====" << endl;
+        cout << "1. Create" << endl;
+        cout << "2. Display" << endl;
+        cout << "3. Insert First" << endl;
+        cout << "4. Insert Last" << endl;
+        cout << "5. Insert Desired Position" << endl;
+        cout << "6. Insert Before Desired" << endl;
+        cout << "7. Insert After Desired" << endl;
+        cout << "8. Delete First" << endl;
+        cout << "9. Delete Last" << endl;
+        cout << "10. Delete Desired" << endl;
+        cout << "11. Delete Before Desired" << endl;
+        cout << "12. Delete After Desired" << endl;
+        cout << "13. Search" << endl;
+        cout << "14. Sort" << endl;
+        cout << "15. Update" << endl;
+        cout << "16. Count Nodes" << endl;
+        cout << "17. Exit" << endl;
+
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            list.create();
+            break;
+
+        case 2:
+            list.display();
+            break;
+
+        case 3:
+            list.insertFirst();
+            break;
+
+        case 4:
+            list.insertLast();
+            break;
+
+        case 5:
+            list.insertPosition();
+            break;
+
+        case 6:
+            list.insertBefore();
+            break;
+
+        case 7:
+            list.insertAfter();
+            break;
+
+        case 8:
+            list.deleteFirst();
+            break;
+
+        case 9:
+            list.deleteLast();
+            break;
+
+        case 10:
+            list.deleteDesired();
+            break;
+
+        case 11:
+            list.deleteBefore();
+            break;
+
+        case 12:
+            list.deleteAfter();
+            break;
+
+        case 13:
+            list.search();
+            break;
+
+        case 14:
+            list.sortList();
+            break;
+
+        case 15:
+            list.update();
+            break;
+
+        case 16:
+            list.countNodes();
+            break;
+
+        case 17:
+            cout << "Program ended." << endl;
+            break;
+
+        default:
+            cout << "Invalid choice!" << endl;
+        }
+
+    } while (choice != 17);
+
+    return 0;
+}

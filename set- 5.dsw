@@ -1,0 +1,159 @@
+ERRO NO: 92500588041
+//5] Write a program of dynamic stack.*/
+
+#include <iostream>
+using namespace std;
+
+class DynamicStack
+{
+    int *arr;
+    int top;
+    int size;
+
+public:
+    DynamicStack(int initialSize)
+    {
+        size = initialSize;
+        top = -1;
+        arr = new int[size];
+    }
+
+    void push()
+    {
+        int value;
+
+        cout << "Enter value: ";
+        cin >> value;
+
+        if (top == size - 1)
+        {
+            int newSize = size * 2;
+
+            int *temp = new int[newSize];
+
+            for (int i = 0; i <= top; i++)
+            {
+                temp[i] = arr[i];
+            }
+
+            delete[] arr;
+
+            arr = temp;
+            size = newSize;
+
+            cout << "Stack size increased to "
+                 << size << endl;
+        }
+
+        arr[++top] = value;
+
+        cout << "Element pushed." << endl;
+    }
+
+    void pop()
+    {
+        if (top == -1)
+        {
+            cout << "Stack Underflow!" << endl;
+            return;
+        }
+
+        cout << "Deleted element: "
+             << arr[top--] << endl;
+    }
+
+    void peep()
+    {
+        if (top == -1)
+        {
+            cout << "Stack is empty." << endl;
+            return;
+        }
+
+        cout << "Top element: "
+             << arr[top] << endl;
+    }
+
+    void display()
+    {
+        if (top == -1)
+        {
+            cout << "Stack is empty." << endl;
+            return;
+        }
+
+        cout << "Stack: ";
+
+        for (int i = top; i >= 0; i--)
+        {
+            cout << arr[i] << " ";
+        }
+
+        cout << endl;
+    }
+
+    ~DynamicStack()
+    {
+        delete[] arr;
+    }
+};
+
+int main()
+{
+    int size;
+
+    cout << "Enter initial stack size: ";
+    cin >> size;
+
+    if (size <= 0)
+    {
+        cout << "Invalid size." << endl;
+        return 0;
+    }
+
+    DynamicStack s(size);
+
+    int choice;
+
+    do
+    {
+        cout << "\n===== DYNAMIC STACK =====" << endl;
+        cout << "1. Push" << endl;
+        cout << "2. Pop" << endl;
+        cout << "3. Peep" << endl;
+        cout << "4. Display" << endl;
+        cout << "5. Exit" << endl;
+
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            s.push();
+            break;
+
+        case 2:
+            s.pop();
+            break;
+
+        case 3:
+            s.peep();
+            break;
+
+        case 4:
+            s.display();
+            break;
+
+        case 5:
+            cout << "Program ended." << endl;
+            break;
+
+        default:
+            cout << "Invalid choice!" << endl;
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}

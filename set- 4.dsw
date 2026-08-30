@@ -1,0 +1,52 @@
+ERRO NO: 92500588041
+//4] Write a tower of Hanoi program.*/
+
+#include <iostream>
+using namespace std;
+
+int countMoves = 0;
+
+void towerOfHanoi(int n, char source, char auxiliary, char destination)
+{
+    if (n == 1)
+    {
+        cout << "Move disk 1 from "
+             << source << " to "
+             << destination << endl;
+
+        countMoves++;
+        return;
+    }
+
+    towerOfHanoi(n - 1, source, destination, auxiliary);
+
+    cout << "Move disk " << n << " from "
+         << source << " to "
+         << destination << endl;
+
+    countMoves++;
+
+    towerOfHanoi(n - 1, auxiliary, source, destination);
+}
+
+int main()
+{
+    int n;
+
+    cout << "Enter number of disks: ";
+    cin >> n;
+
+    if (n <= 0)
+    {
+        cout << "Invalid number of disks." << endl;
+        return 0;
+    }
+
+    cout << "\nSteps:\n";
+
+    towerOfHanoi(n, 'A', 'B', 'C');
+
+    cout << "\nTotal moves = " << countMoves << endl;
+
+    return 0;
+}
